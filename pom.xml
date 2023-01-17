@@ -20,7 +20,7 @@
 
         <!-- TODO: Add your own database name -->
         <!-- IMPORTANT-1: The database should exist on your droplet -->
-        <db.name>3_exam_backend</db.name>
+        <db.name>3_exam_db</db.name>
     </properties>
     
     <dependencies>
