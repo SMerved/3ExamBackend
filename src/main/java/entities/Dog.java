@@ -140,12 +140,12 @@ public class Dog implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dog dog = (Dog) o;
-        return Objects.equals(id, dog.id) && Objects.equals(name, dog.name) && Objects.equals(breed, dog.breed) && Objects.equals(image, dog.image) && Objects.equals(gender, dog.gender) && Objects.equals(birthdate, dog.birthdate) && Objects.equals(owner, dog.owner) && Objects.equals(walkers, dog.walkers);
+        return Objects.equals(name, dog.name) && Objects.equals(breed, dog.breed) && Objects.equals(image, dog.image) && Objects.equals(gender, dog.gender) && Objects.equals(birthdate, dog.birthdate) && Objects.equals(owner, dog.owner) && Objects.equals(walkers, dog.walkers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, breed, image, gender, birthdate, owner, walkers);
+        return Objects.hash(name, breed, image, gender, birthdate, owner, walkers);
     }
 
     @Override

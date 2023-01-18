@@ -105,12 +105,12 @@ public class Walker implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Walker walker = (Walker) o;
-        return Objects.equals(id, walker.id) && Objects.equals(name, walker.name) && Objects.equals(address, walker.address) && Objects.equals(phone, walker.phone);
+        return Objects.equals(name, walker.name) && Objects.equals(address, walker.address) && Objects.equals(phone, walker.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, phone);
+        return Objects.hash(name, address, phone);
     }
 
     @Override

@@ -2,6 +2,8 @@ package facades;
 
 import dtos.DogDto;
 import entities.Dog;
+import entities.Owner;
+import entities.Walker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -51,6 +53,40 @@ public class DogFacade {
         }
 
         return dogDtos;
+    }
+
+    public DogDto createDog(DogDto dogDto) {
+        EntityManager em = emf.createEntityManager();
+        System.out.println(dogDto);
+        Dog dog = new Dog(dogDto);
+
+        try {
+            em.getTransaction().begin();
+            if (dog.getOwner().getId()!=null) {
+                Owner owner = em.find(Owner.class, dog.getOwner().getId());
+                dog.setOwner(owner);
+                owner.getDogs().add(dog);
+            }
+            else {
+                dog.getOwner().getDogs().add(dog);
+            }
+            for (Walker w : dog.getWalkers()){
+                if (w.getId()!=null){
+                    w = em.find(Walker.class, w.getId());
+                }
+                w.getDogs().add(dog);
+            }
+            em.persist(dog);
+            for (Walker walker: dog.getWalkers()){
+                em.persist(walker);
+            }
+            em.persist(dog.getOwner());
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+
+        return new DogDto(dog);
     }
 
 }

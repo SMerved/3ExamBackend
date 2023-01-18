@@ -100,12 +100,12 @@ public class Owner implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Owner owner = (Owner) o;
-        return Objects.equals(id, owner.id) && Objects.equals(name, owner.name) && Objects.equals(address, owner.address) && Objects.equals(phone, owner.phone);
+        return Objects.equals(name, owner.name) && Objects.equals(address, owner.address) && Objects.equals(phone, owner.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, phone);
+        return Objects.hash(name, address, phone);
     }
 
     @Override

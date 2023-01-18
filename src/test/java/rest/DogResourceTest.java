@@ -8,6 +8,7 @@ import entities.*;
 import facades.DogFacade;
 import facades.WalkerFacade;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -26,6 +27,7 @@ import java.util.Set;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DogResourceTest {
     private static final int SERVER_PORT = 7777;
@@ -195,6 +197,28 @@ public class DogResourceTest {
                 .extract().body().jsonPath().getList("", DogDto.class);
 
         assertThat(dogDtos, containsInAnyOrder(new DogDto(d1), new DogDto(d2), new DogDto(d3)));
+    }
+
+    @Test
+    public void testCreateDog() {
+        login("admin", "test");
+
+        DogDto dogDto = new DogDto(d1);
+        String requestBody = GSON.toJson(dogDto);
+        DogDto createdDogDto;
+
+        createdDogDto = given()
+                .header("Content-type", ContentType.JSON)
+                .header("x-access-token", securityToken)
+                .body(requestBody)
+                .when()
+                .post("dogs/admin/new")
+                .then()
+                .extract().body().jsonPath().getObject("", DogDto.class);
+        System.out.println(createdDogDto);
+
+        assertEquals(d1, new Dog(createdDogDto));
+
     }
 
 }

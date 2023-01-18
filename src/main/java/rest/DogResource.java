@@ -46,4 +46,14 @@ public class DogResource {
         return Response.ok().entity(GSON.toJson(dogDtos)).build();
     }
 
+    @POST
+    @Path("admin/new")
+    @RolesAllowed("admin")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createDog(String content) {
+        DogDto dogDto = GSON.fromJson(content, DogDto.class);
+        DogDto newDogDto = FACADE.createDog(dogDto);
+        return Response.ok().entity(GSON.toJson(newDogDto)).build();
+    }
 }

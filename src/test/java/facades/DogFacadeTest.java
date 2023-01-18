@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class DogFacadeTest {
     private static EntityManagerFactory emf;
     private static DogFacade facade;
@@ -94,6 +96,21 @@ public class DogFacadeTest {
         assert(actual.contains(new DogDto(d1)));
         assert(actual.contains(new DogDto(d2)));
         assert(actual.contains(new DogDto(d3)));
+    }
+
+    @Test
+    public void testCreateDog() throws Exception {
+        Set<Walker> walkers = new HashSet<>();
+        Walker walker= new Walker("Ole", "Jagtvej 60", "11223344");
+        Dog expected = new Dog("Rover", "Golden Retriever", "DogImage", "Male", "08-10-2015", o1, walkers);
+        expected.getWalkers().add(walker);
+        o1.getDogs().add(expected);
+
+        DogDto actualDTO = facade.createDog(new DogDto(expected));
+        System.out.println(actualDTO);
+        Dog actual = new Dog(actualDTO);
+        System.out.println(actual);
+        assertEquals(expected, actual);
     }
 
 }
