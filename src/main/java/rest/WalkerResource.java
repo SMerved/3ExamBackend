@@ -27,7 +27,7 @@ public class WalkerResource {
     @GET
     @RolesAllowed("user")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getAllOwners() {
+    public Response getAllWalkers() {
         List<WalkerDto> walkerDtos = FACADE.getAllWalkers();
         System.out.println(walkerDtos);
 

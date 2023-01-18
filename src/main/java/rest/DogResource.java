@@ -27,7 +27,7 @@ public class DogResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @GET
-    @RolesAllowed("user")
+    @RolesAllowed({"user", "admin"})
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllDogs() {
         List<DogDto> dogDtos = FACADE.getAllDogs();
@@ -37,7 +37,7 @@ public class DogResource {
 
     @GET
     @Path("{id}")
-    @RolesAllowed("user")
+    @RolesAllowed({"user", "admin"})
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllDogsFromOwner(@PathParam("id") String content) {
         Long ownerId = GSON.fromJson(content, Long.class);
@@ -52,8 +52,11 @@ public class DogResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response createDog(String content) {
+        System.out.println("hallo");
         DogDto dogDto = GSON.fromJson(content, DogDto.class);
+        System.out.println(dogDto);
         DogDto newDogDto = FACADE.createDog(dogDto);
+        System.out.println(newDogDto);
         return Response.ok().entity(GSON.toJson(newDogDto)).build();
     }
 }

@@ -25,7 +25,7 @@ public class OwnerResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @GET
-    @RolesAllowed("user")
+    @RolesAllowed({"user", "admin"})
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllOwners() {
         List<OwnerDto> ownerDtos = FACADE.getAllOwners();

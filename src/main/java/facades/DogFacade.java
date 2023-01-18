@@ -70,15 +70,13 @@ public class DogFacade {
             else {
                 dog.getOwner().getDogs().add(dog);
             }
+            em.persist(dog);
             for (Walker w : dog.getWalkers()){
                 if (w.getId()!=null){
                     w = em.find(Walker.class, w.getId());
                 }
                 w.getDogs().add(dog);
-            }
-            em.persist(dog);
-            for (Walker walker: dog.getWalkers()){
-                em.persist(walker);
+                em.persist(w);
             }
             em.persist(dog.getOwner());
             em.getTransaction().commit();
