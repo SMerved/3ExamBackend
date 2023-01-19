@@ -50,6 +50,7 @@ public class Owner implements Serializable {
     }
 
     public Owner(OwnerDto ownerDto){
+        this.id = ownerDto.getId();
         this.name = ownerDto.getName();
         this.address = ownerDto.getAddress();
         this.phone = ownerDto.getPhone();

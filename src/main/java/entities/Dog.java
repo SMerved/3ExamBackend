@@ -18,27 +18,27 @@ public class Dog implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dog_id")
+    @Column(name = "dog_id", nullable = false)
     private Long id;
 
     @NotNull
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @NotNull
-    @Column(name = "breed")
+    @Column(name = "breed", nullable = false)
     private String breed;
     @NotNull
-    @Column(name = "image")
+    @Column(name = "image", nullable = false)
     private String image;
     @NotNull
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false)
     private String gender;
     @NotNull
-    @Column(name = "birthdate")
+    @Column(name = "birthdate", nullable = false)
     private String birthdate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
     @ManyToMany(mappedBy = "dogs")

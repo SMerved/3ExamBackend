@@ -10,6 +10,7 @@ import utils.EMF_Creator;
 
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -52,11 +53,20 @@ public class DogResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response createDog(String content) {
-        System.out.println("hallo");
         DogDto dogDto = GSON.fromJson(content, DogDto.class);
-        System.out.println(dogDto);
         DogDto newDogDto = FACADE.createDog(dogDto);
         System.out.println(newDogDto);
         return Response.ok().entity(GSON.toJson(newDogDto)).build();
+    }
+
+    @PUT
+    @Path("admin/update")
+    @RolesAllowed("admin")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response upDog(String content) throws EntityNotFoundException {
+        DogDto dogDto = GSON.fromJson(content, DogDto.class);
+        DogDto updatedDogDto = FACADE.upDog(dogDto);
+        return Response.ok().entity(GSON.toJson(updatedDogDto)).build();
     }
 }

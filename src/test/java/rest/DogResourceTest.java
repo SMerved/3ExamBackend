@@ -218,7 +218,39 @@ public class DogResourceTest {
         System.out.println(createdDogDto);
 
         assertEquals(d1, new Dog(createdDogDto));
+    }
 
+    @Test
+    public void testUpdateHobby() {
+        login("admin", "test");
+
+        d1.setName("UpdatedName");
+        d1.setBreed("UpdatedBreed");
+        d1.setImage("UpdatedImage");
+        d1.setGender("UpdatedGender");
+        d1.setBirthdate("UpdatedBirthdate");
+        d1.setOwner(o2);
+        Set<Walker> updatedWalkers = new HashSet<>();
+        d1.setWalkers(updatedWalkers);
+        d1.getWalkers().add(w2);
+        Walker walker = new Walker("Johnny", "Jagtvej 40", "11223344");
+        d1.getWalkers().add(walker);
+        DogDto dogDto = new DogDto(d1);
+        String requestBody = GSON.toJson(dogDto);
+        given()
+                .header("Content-type", ContentType.JSON)
+                .header("x-access-token", securityToken)
+                .body(requestBody)
+                .when()
+                .put("/dogs/admin/update")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("name", equalTo("UpdatedName"))
+                .body("breed", equalTo("UpdatedBreed"))
+                .body("image", equalTo("UpdatedImage"))
+                .body("gender", equalTo("UpdatedGender"))
+                .body("birthdate", equalTo("UpdatedBirthdate"));
     }
 
 }

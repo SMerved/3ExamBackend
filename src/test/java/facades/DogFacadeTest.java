@@ -112,5 +112,26 @@ public class DogFacadeTest {
         System.out.println(actual);
         assertEquals(expected, actual);
     }
+    @Test
+    public void testUpDog() throws Exception {
+        d1.setName("UpdatedName");
+        d1.setBreed("UpdatedBreed");
+        d1.setImage("UpdatedImage");
+        d1.setGender("UpdatedGender");
+        d1.setBirthdate("UpdatedBirthdate");
+        d1.setOwner(o2);
+        Set<Walker> updatedWalkers = new HashSet<>();
+        d1.setWalkers(updatedWalkers);
+        d1.getWalkers().add(w2);
+        Walker walker = new Walker("Johnny", "Jagtvej 40", "11223344");
+        d1.getWalkers().add(walker);
+        System.out.println(d1);
+        Dog expectedDog = d1;
+        System.out.println(expectedDog);
+        DogDto actualDogDTO = facade.upDog(new DogDto(d1));
+        Dog actualDog = new Dog(actualDogDTO);
+        assertEquals(expectedDog, actualDog);
+    }
+
 
 }
