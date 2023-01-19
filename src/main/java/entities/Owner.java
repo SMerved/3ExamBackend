@@ -21,13 +21,13 @@ public class Owner implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @NotNull
-    @Column(name = "address")
+    @Column(name = "address", nullable = false)
     private String address;
     @NotNull
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @OneToMany(mappedBy = "owner")
