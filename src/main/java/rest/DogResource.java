@@ -69,4 +69,16 @@ public class DogResource {
         DogDto updatedDogDto = FACADE.upDog(dogDto);
         return Response.ok().entity(GSON.toJson(updatedDogDto)).build();
     }
+
+    @PUT
+    @Path("admin/delete")
+    @RolesAllowed("admin")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response deleteDog(String content) throws EntityNotFoundException {
+        System.out.println("hallo");
+        DogDto dogDto = GSON.fromJson(content, DogDto.class);
+        DogDto deletedDog = FACADE.deleteDog(dogDto);
+        return Response.ok().entity(GSON.toJson(deletedDog)).build();
+    }
 }

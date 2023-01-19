@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -133,5 +134,16 @@ public class DogFacadeTest {
         assertEquals(expectedDog, actualDog);
     }
 
+    @Test
+    public void deleteDog() {
+        Dog expectedDog = d2;
+        Set<Walker> walkers = new HashSet<>();
+        expectedDog.setWalkers(walkers);
+        DogDto dogDto = facade.deleteDog(new DogDto(expectedDog));
+        Dog actualDog = new Dog(dogDto);
+        assertEquals(expectedDog, actualDog);
+        List<DogDto> dogDtos = facade.getAllDogs();
+        assert(!dogDtos.contains(new DogDto(actualDog)));
+    }
 
 }

@@ -253,4 +253,26 @@ public class DogResourceTest {
                 .body("birthdate", equalTo("UpdatedBirthdate"));
     }
 
+    @Test
+    public void testDeleteDog() {
+        login("admin", "test");
+        DogDto dogDto = new DogDto(d2);
+        String requestBody = GSON.toJson(dogDto);
+
+        given()
+                .header("Content-type", ContentType.JSON)
+                .header("x-access-token", securityToken)
+                .body(requestBody)
+                .when()
+                .put("/dogs/admin/delete")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body("name", equalTo(d2.getName()))
+                .body("breed", equalTo(d2.getBreed()));
+        List<DogDto> dogDtos = facade.getAllDogs();
+        assert(!dogDtos.contains(new DogDto(d2)));
+    }
+
+
 }

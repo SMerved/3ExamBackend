@@ -7,6 +7,7 @@ import entities.Walker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +126,18 @@ public class DogFacade {
         } finally {
             em.close();
         }
+        return new DogDto(d);
+    }
+
+    public DogDto deleteDog(DogDto dogDto) {
+
+        EntityManager em = emf.createEntityManager();
+        Dog d = em.find(Dog.class, dogDto.getId());
+        if (d == null)
+            throw new EntityNotFoundException("Could not remove dog with id: " + dogDto.getId());
+        em.getTransaction().begin();
+        em.remove(d);
+        em.getTransaction().commit();
         return new DogDto(d);
     }
 
