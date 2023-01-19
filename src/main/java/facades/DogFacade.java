@@ -107,17 +107,18 @@ public class DogFacade {
             }
             dog.getOwner().getDogs().add(dog);
 
-            d = em.merge(dog);
 
             for (Walker w : dog.getWalkers()) {
                 if (w.getId() != null) {
                     Walker oldWalker = em.find(Walker.class, w.getId());
-                    oldWalker.getDogs().removeIf(dog1 -> Objects.equals(dog1.getId(), dog.getId()));
+                    dog.getWalkers().removeIf(walker1 -> Objects.equals(walker1.getId(), oldWalker.getId()));
+                    dog.getWalkers().add(oldWalker);
                     w.setDogs(oldWalker.getDogs());
                 }
                 w.getDogs().add(dog);
                 em.merge(w);
             }
+            d = em.merge(dog);
             em.merge(dog.getOwner());
 
             em.getTransaction().commit();

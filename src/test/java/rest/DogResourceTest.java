@@ -221,7 +221,7 @@ public class DogResourceTest {
     }
 
     @Test
-    public void testUpdateHobby() {
+    public void testUpDog() {
         login("admin", "test");
 
         d1.setName("UpdatedName");
